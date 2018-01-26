@@ -14,8 +14,8 @@ public class Player : MonoBehaviour {
     // acceleration
     public float m_velocity;
     public float m_max_velocity;
-    public float m_speed;
     public float m_acceleration;
+    public float m_speed;
 
     // rotation
     public float m_rot_velocity;
@@ -25,47 +25,53 @@ public class Player : MonoBehaviour {
     // private vars
     private bool m_moving;
     
-
-    void Awake () {
-
-    }
+    
     void Update () {
 
         // Rotate
         if (Input.GetKey(KeyCode.A)) {
-            if (m_rot_velocity < (m_rot_max_velocity / 100))
-                m_rot_velocity += (m_rot_acceleration * m_speed) / 100;
-
-            
+            this.transform.Rotate(new Vector3(0, 0, Time.deltaTime * m_speed));
         }
         if (Input.GetKey(KeyCode.D)) {
-            if (m_rot_velocity > -(m_rot_max_velocity / 100))
-                m_rot_velocity -= (m_rot_acceleration * m_speed) / 100;
+            this.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * m_speed));
         }
 
         // Acceleration
         if (Input.GetKey(KeyCode.W)) {
-            if (m_velocity < (m_max_velocity/100))
-                m_velocity += (m_acceleration * m_speed) / 100;
+            if (m_velocity < m_max_velocity)
+                m_velocity += m_acceleration;
+        } else {
+            if (Input.GetKey(KeyCode.S)) {
+                m_velocity -= m_acceleration;
+            } else {
+                if (m_velocity < 0.06 && m_velocity > 0) {
+                    m_velocity = 0;
+                }
+                if (m_velocity > 0)
+                    m_velocity -= Time.deltaTime;
+                if (m_velocity < 0)
+                    m_velocity += Time.deltaTime;
+            }
         }
-        if (Input.GetKey(KeyCode.S)) {
-            if (m_velocity > 0)
-                m_velocity -= (m_acceleration * m_speed) / 100;
-        }                   
+                        
 
         if (m_velocity == 0) {
             if (!m_moving) {
+                __event<EVENT_PLAYER>.InvokeEvent(this, EVENT_PLAYER.MOVING, true);
                 m_moving = true;
             }
         } else {
             if (m_moving) {
+                __event<EVENT_PLAYER>.InvokeEvent(this, EVENT_PLAYER.MOVING, false);
                 m_moving = false;
             }
         }
 
-        if (m_velocity > 0) {
-            this.transform.position += transform.up * m_velocity;
-        }
+        this.transform.position += transform.up * m_velocity * Time.deltaTime;
         this.transform.Rotate(new Vector3(0, 0, Time.deltaTime * m_rot_velocity));
+    }
+
+    void OnDrawGizmos () {
+        
     }
 }

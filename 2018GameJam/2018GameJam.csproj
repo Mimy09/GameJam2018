@@ -87,6 +87,7 @@
     <Compile Include="Assets\EHS\Examples\exampleScript.cs" />
     <Compile Include="Assets\EHS\Scripts\EHS.cs" />
     <Compile Include="Assets\EHS\Scripts\EHS_Manager.cs" />
+    <Compile Include="Assets\Scripts\Player\Ping.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

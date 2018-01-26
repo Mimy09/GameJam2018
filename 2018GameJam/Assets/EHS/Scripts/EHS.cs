@@ -69,7 +69,7 @@ public class __event<_T> {
 #if UNITY_EDITOR
         if (e.value != null) {
             try {
-                EHS_Manager.LogMessage("[INVOKING ARG="+e.arg.ToString()+", VALUE="+e.value.ToString()+"]");
+                EHS_Manager.LogMessage("[INVOKING ARG=" + e.arg.ToString() + ", VALUE=" + e.value.ToString() + "]");
             } catch {
                 EHS_Manager.LogMessage("[INVOKING ARG=" + e.arg.ToString() + ", VALUE=N/A]");
             }
@@ -97,7 +97,9 @@ public class __event<_T> {
     /// </summary>
     /// <param name="i">index of Subscriber</param>
     /// <returns></returns>
-    public static __eHandle<object, __eArg<_T>> GetSubscriber (int i) { return Subscribers[i]; }
+    public static __eHandle<object, __eArg<_T>> GetSubscriber (int i) {
+       return Subscribers[i];
+    }
     /// <summary>
     /// Creates a new Subscriber and adds it to storage
     /// </summary>
@@ -107,13 +109,13 @@ public class __event<_T> {
     public static int CreateSubscriber (__eHandle<object, __eArg<_T>> f) {
         if (f == null) {
 #if UNITY_EDITOR
-            EHS_Manager.LogMessage("[SUBSCRIBING FAILED, ID=" + (Subscribers.Count - 1) + 1 + ", NAME="+ f.Method.Name + "]");
+            EHS_Manager.LogMessage("[SUBSCRIBING FAILED, ID=" + (Subscribers.Count - 1) + 1 + ", NAME=" + f.Method.Name + "]");
 #endif
             return -1;
         }
         Subscribers.Add(f);
 #if UNITY_EDITOR
-        EHS_Manager.LogMessage("[SUBSCRIBING ID=" + (Subscribers.Count - 1) + ", NAME="+f.Method.Name+"]");
+        EHS_Manager.LogMessage("[SUBSCRIBING ID=" + (Subscribers.Count - 1) + ", NAME=" + f.Method.Name + "]");
 #endif
         return Subscribers.Count - 1;
     }
@@ -145,12 +147,12 @@ public class __event<_T> {
         int i = Raise(CreateSubscriber(f));
         if (i == -1) {
 #if UNITY_EDITOR
-            EHS_Manager.LogMessage("[RAISING FAILED, NAME=" + f.Method.Name + ", FROM="+ f.Target.ToString()+ "]");
+            EHS_Manager.LogMessage("[RAISING FAILED, NAME=" + f.Method.Name + ", FROM=" + f.Target.ToString() + "]");
 #endif
             return i;
         }
 #if UNITY_EDITOR
-            EHS_Manager.LogMessage("[RAISING NAME=" + f.Method.Name + ", FROM=" + f.Target.ToString() + "]");
+        EHS_Manager.LogMessage("[RAISING NAME=" + f.Method.Name + ", FROM=" + f.Target.ToString() + "]");
 #endif
         return i;
     }
@@ -167,7 +169,7 @@ public class __event<_T> {
             return -1;
         }
 #if UNITY_EDITOR
-        EHS_Manager.LogMessage("[CONSUMING ID="+i+"]");
+        EHS_Manager.LogMessage("[CONSUMING ID=" + i + "]");
 #endif
         HandleEvent -= Subscribers[i];
         Subscribers.RemoveAt(i);

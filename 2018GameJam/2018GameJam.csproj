@@ -89,6 +89,7 @@
     <Compile Include="Assets\EHS\Scripts\EHS_Manager.cs" />
     <Compile Include="Assets\Resourses\Materials\shaders\ShadowPostRender.cs" />
     <Compile Include="Assets\Resourses\Materials\shaders\ShadowResize.cs" />
+    <Compile Include="Assets\Scripts\environment\Planet.cs" />
     <Compile Include="Assets\Scripts\Player\Ping.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\SetRenderQueue.cs" />

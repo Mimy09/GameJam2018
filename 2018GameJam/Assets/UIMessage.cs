@@ -13,12 +13,12 @@ public class UIMessage : MonoBehaviour
 
     public string Title { get { return m_title.text; } set { m_title.text = value; } }
     public string Message { get { return m_message.text; } set { m_message.text = value; } }
-    public string Action1Key { get { return m_actionKEY[0].text; } set { m_actionKEY[0].text = value; } }
-    public string Action2Key { get { return m_actionKEY[1].text; } set { m_actionKEY[1].text = value; } }
-    public string Action1Text { get { return m_actionTXT[0].text; } set { m_actionTXT[0].text = value; } }
-    public string Action2Text { get { return m_actionTXT[1].text; } set { m_actionTXT[1].text = value; } }
-    public bool isAction1ButtonVisible { get { return m_actionBTN[0].gameObject.activeInHierarchy; } set { m_actionBTN[0].gameObject.SetActive(value); } }
-    public bool isAction2ButtonVisible { get { return m_actionBTN[1].gameObject.activeInHierarchy; } set { m_actionBTN[1].gameObject.SetActive(value); } }
+    public string Action1Key { get { return m_actionKEY[1].text; } set { m_actionKEY[1].text = value; } }
+    public string Action2Key { get { return m_actionKEY[0].text; } set { m_actionKEY[0].text = value; } }
+    public string Action1Text { get { return m_actionTXT[1].text; } set { m_actionTXT[1].text = value; } }
+    public string Action2Text { get { return m_actionTXT[0].text; } set { m_actionTXT[0].text = value; } }
+    public bool isAction1ButtonVisible { get { return m_actionBTN[1].gameObject.activeInHierarchy; } set { m_actionBTN[1].gameObject.SetActive(value); } }
+    public bool isAction2ButtonVisible { get { return m_actionBTN[0].gameObject.activeInHierarchy; } set { m_actionBTN[0].gameObject.SetActive(value); } }
 
     // Use this for initialization
     void Start ()
@@ -41,7 +41,11 @@ public class UIMessage : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-
+        Title = "Here is the Title";
+        Message = "Here is the message that will be displayed and i will check the length of it to see if it goes and does";
+        isAction1ButtonVisible = false;
+        Action2Key = "A";
+        Action2Text = "Ok";
 	}
 
     public void FadeIn()

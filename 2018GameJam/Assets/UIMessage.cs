@@ -38,15 +38,6 @@ public class UIMessage : MonoBehaviour
         m_actionBTN[1] = componentsBTN[1];
     }
 	
-	// Update is called once per frame
-	void Update ()
-    {
-        Title = "Here is the Title";
-        Message = "Here is the message that will be displayed and i will check the length of it to see if it goes and does";
-        isAction1ButtonVisible = false;
-        Action2Key = "A";
-        Action2Text = "Ok";
-	}
 
     public void FadeIn()
     {

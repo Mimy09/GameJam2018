@@ -12,13 +12,13 @@ public class Planet : MonoBehaviour {
     public int min_artifacts;
     public int m_artifacts;
 
-    public int max_fual;
-    public int min_fual;
-    public int m_fual;
+    public int max_fuel;
+    public int min_fuel;
+    public int m_fuel;
 
     void Start () {
         m_resources = Random.Range(min_resources, max_resources);
         m_artifacts = Random.Range(min_artifacts, max_artifacts);
-        m_fual = Random.Range(min_fual, max_fual);
+        m_fuel = Random.Range(min_fuel, max_fuel);
     }
 }

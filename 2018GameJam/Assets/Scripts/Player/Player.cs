@@ -17,6 +17,8 @@ public class Player : MonoBehaviour {
     public float m_acceleration;
     public float m_speed;
 
+    public float m_fual = 90;
+
     // rotation
     public float m_rot_velocity;
     public float m_rot_max_velocity;

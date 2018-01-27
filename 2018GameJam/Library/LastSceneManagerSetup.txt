@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/EHS/Examples/Example.unity
+- path: L:/_GIT/Humorous-Overkill/HumorousOverkill/Assets/Scenes/FranciscoRomano.unity
   isLoaded: 1
   isActive: 1

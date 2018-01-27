@@ -9,31 +9,21 @@ public class Ping : MonoBehaviour {
     public List<float> angles = new List<float>();
     Vector2 temp;
     MeshFilter filter;
+    RaycastHit2D hit;
 
+    public GameObject Player;
+    public Material mat;
+    Mesh msh;
+    
     void Start () {
         planets = GameObject.FindGameObjectsWithTag("Planet");
+        MeshRenderer mr = gameObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
+        mr.sharedMaterial = mat;
 
-        // Create Vector2 vertices
-        Vector2[] vertices2D = new Vector2[] {
-            new Vector2(0,0),
-            new Vector2(0,50),
-            new Vector2(50,50),
-            new Vector2(50,100),
-            new Vector2(0,100),
-            new Vector2(0,150),
-            new Vector2(150,150),
-            new Vector2(150,100),
-            new Vector2(100,100),
-            new Vector2(100,50),
-            new Vector2(150,50),
-            new Vector2(150,0),
-        };
-
-        gameObject.AddComponent(typeof(MeshRenderer));
         filter = gameObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
     }
 
-    void Update () {
+    void Sonar () {
         mesh.Clear();
         points.Clear();
         angles.Clear();
@@ -43,10 +33,41 @@ public class Ping : MonoBehaviour {
         }
         for (int i = 0; i < points.Count; i++) {
             for (int j = 0; j < points[i].Length; j++) {
-                RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, (points[i][j] * planets[i].transform.localScale.x) + (Vector2)planets[i].transform.position - (Vector2)this.transform.position, 10.0f);
-                Debug.DrawLine((Vector2)this.transform.position, hit.point,Color.cyan);
-                mesh.Add(hit.point);
+                Vector2 pppp = planets[i].transform.TransformPoint(points[i][j] * 1.1f);
+                Vector2 norm = (pppp - (Vector2)transform.position).normalized;
+                hit = Physics2D.Raycast((Vector2)this.transform.position, (pppp + norm * 5f) - (Vector2)transform.position, 500.0f);
+
+                //if (Vector2.Distance(this.transform.position, (pppp + norm * 5f) - (Vector2)transform.position) < 20) {
+                    if (hit.point == new Vector2(0, 0)) {
+                        mesh.Add((pppp + norm * 2f) - (Vector2)transform.position);
+                    } else {
+                        mesh.Add(hit.point - (Vector2)transform.position);
+                    }
+                //}
             }
+        }
+        Vector2 pos = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
+        hit = Physics2D.Raycast((Vector2)this.transform.position, pos - (Vector2)transform.position, 500.0f);
+        if (hit.point == new Vector2(0, 0)) {
+            mesh.Add(pos - (Vector2)transform.position);
+        }
+        
+        pos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0));
+        hit = Physics2D.Raycast((Vector2)this.transform.position, pos - (Vector2)transform.position, 500.0f);
+        if (hit.point == new Vector2(0, 0)) {
+            mesh.Add(pos - (Vector2)transform.position);
+        }
+        
+        pos = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height));
+        hit = Physics2D.Raycast((Vector2)this.transform.position, pos - (Vector2)transform.position, 500.0f);
+        if (hit.point == new Vector2(0, 0)) {
+            mesh.Add(pos - (Vector2)transform.position);
+        }
+        
+        pos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        hit = Physics2D.Raycast((Vector2)this.transform.position, pos - (Vector2)transform.position, 500.0f);
+        if (hit.point == new Vector2(0, 0)) {
+            mesh.Add(pos - (Vector2)transform.position);
         }
 
         for (int i = 0; i < mesh.Count; i++) {
@@ -57,7 +78,7 @@ public class Ping : MonoBehaviour {
                 if (cross.z > 0) { ang = 360 - ang; }
                 cross = Vector3.Cross(transform.position, mesh[j + 1]);
                 if (cross.z > 0) { ang_2 = 360 - ang_2; }
-                
+
                 if (ang > ang_2) {
                     temp = mesh[j];
                     mesh[j] = mesh[j + 1];
@@ -90,7 +111,7 @@ public class Ping : MonoBehaviour {
         }
 
         // Create the mesh
-        Mesh msh = new Mesh();
+        msh = new Mesh();
         msh.vertices = vertices;
         msh.triangles = indices;
         msh.RecalculateNormals();
@@ -98,7 +119,17 @@ public class Ping : MonoBehaviour {
 
         // Set up game object with mesh;
         filter.mesh = msh;
+    }
 
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.Space) && Player.GetComponent<Player>().m_velocity == 0) {
+            transform.position = Player.transform.position;
+            Sonar();
+        }
+    }
+
+    void OnDrawGizmos () {
+        Gizmos.DrawSphere(this.transform.position, 1.0f);
     }
 }
 

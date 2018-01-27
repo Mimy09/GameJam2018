@@ -69,7 +69,7 @@
 				fixed4 frag_color2 = min(0.5, sin(d2)) * 4;
 				frag_color2.w = 1.0;
 
-				//frag_color *= float4( 0.2, 1.0, 0.2, 1.0 );
+				//frag_color *= float4( 1.0, 1.0, 1.0, 1.0 );
 
 				float4 brightness;
 				brightness.r = min(max(frag_color.r, frag_color2.r), 1.0);

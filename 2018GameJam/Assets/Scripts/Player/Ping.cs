@@ -35,15 +35,13 @@ public class Ping : MonoBehaviour {
             for (int j = 0; j < points[i].Length; j++) {
                 Vector2 pppp = planets[i].transform.TransformPoint(points[i][j] * 1.1f);
                 Vector2 norm = (pppp - (Vector2)transform.position).normalized;
-                hit = Physics2D.Raycast((Vector2)this.transform.position, (pppp + norm * 5f) - (Vector2)transform.position, 500.0f);
+                hit = Physics2D.Raycast((Vector2)this.transform.position, (pppp + norm * 5f) - (Vector2)transform.position, 5000.0f, 9);
 
-                //if (Vector2.Distance(this.transform.position, (pppp + norm * 5f) - (Vector2)transform.position) < 20) {
-                    if (hit.point == new Vector2(0, 0)) {
-                        mesh.Add((pppp + norm * 2f) - (Vector2)transform.position);
-                    } else {
-                        mesh.Add(hit.point - (Vector2)transform.position);
-                    }
-                //}
+                if (hit.point == new Vector2(0, 0)) {
+                    mesh.Add((pppp + norm * 2f) - (Vector2)transform.position);
+                } else {
+                    mesh.Add(hit.point - (Vector2)transform.position);
+                }
             }
         }
         Vector2 pos = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));

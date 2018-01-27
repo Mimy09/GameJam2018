@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class UIMessage : MonoBehaviour
 {
+    private Animator m_animator;
     private UnityEngine.UI.Text m_title = null;
     private UnityEngine.UI.Text m_message = null;
     private UnityEngine.UI.Text[] m_actionTXT = new UnityEngine.UI.Text[2];
@@ -23,6 +24,7 @@ public class UIMessage : MonoBehaviour
     void Start ()
     {
         // fetch components
+        m_animator = GetComponent<Animator>();
         UnityEngine.UI.Text[] componentsTXT = GetComponentsInChildren<UnityEngine.UI.Text>();
         UnityEngine.UI.Button[] componentsBTN = GetComponentsInChildren<UnityEngine.UI.Button>();
         // store components
@@ -39,6 +41,18 @@ public class UIMessage : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-             
+
 	}
+
+    public void FadeIn()
+    {
+        // start fade in animation
+        m_animator.SetBool("Display", true);
+    }
+
+    public void FadeOut()
+    {
+        // start fade out animation
+        m_animator.SetBool("Display", false);
+    }
 }

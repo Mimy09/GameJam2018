@@ -13,4 +13,10 @@ public class UIRadial : MonoBehaviour
         // get slider from 
         m_image = GetComponentInChildren<UnityEngine.UI.Image>();
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

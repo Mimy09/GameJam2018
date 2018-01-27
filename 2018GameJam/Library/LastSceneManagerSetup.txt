@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: L:/_GIT/Humorous-Overkill/HumorousOverkill/Assets/Scenes/FranciscoRomano.unity
-=======
-- path: Assets/Scenes/UIScene.unity
->>>>>>> f7824d4c23a3fb15766173597ebce4e5523787d8
+- path: Assets/Scenes/TestingArea.unity
   isLoaded: 1
   isActive: 1

@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Player\Ping.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\SetRenderQueue.cs" />
+    <Compile Include="Assets\UIMessage.cs" />
     <Compile Include="Assets\UIRadial.cs" />
   </ItemGroup>
   <ItemGroup>

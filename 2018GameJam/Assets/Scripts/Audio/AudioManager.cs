@@ -35,34 +35,20 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioClip clip in musicClips)
         {
-            AddClip(clip, 0);
+            AddClip(clip, 1);
         }
+        PlayMusic(0, true);
     }
     void Update()
     {
         FadeInformation.maximum = volume;
-        foreach (AudioClip clip in musicClips)
+        foreach (AudioClip key in fadeTable.Keys)
         {
-            if (fadeTable.ContainsKey(clip))
+            fadeTable[key].Update();
+            if (fadeTable[key].IsFadeComplete())
             {
-                fadeTable[clip].Update();
-                if (fadeTable[clip].IsFadeComplete())
-                {
-                    Debug.Log("removing fade");
-                    fadeTable.Remove(clip);
-                }
-            }
-        }
-        foreach (AudioClip clip in soundClips)
-        {
-            if (fadeTable.ContainsKey(clip))
-            {
-                fadeTable[clip].Update();
-                if (fadeTable[clip].IsFadeComplete())
-                {
-                    Debug.Log("removing fade");
-                    fadeTable.Remove(clip);
-                }
+                Debug.Log("removing fade");
+                fadeTable.Remove(key);
             }
         }
     }
@@ -131,124 +117,3 @@ public class AudioManager : MonoBehaviour
     public void FadeOutMusic(int index, float speed) { FadeOutMusic(musicClips[index], speed); }
     public void FadeOutMusic(AudioClip clip, float speed) { FadeClip(sourceTable[clip], clip, -speed); }
 }
-
-//// :: variables
-//[Range(0.01f, 1.00f)]
-//public float fade = 1.0f;
-//[Range(0.00f, 1.00f)] public float volume = 0.7f;
-//public List<AudioClip> musics = new List<AudioClip>();
-//private List<AudioFade> audioFadeIn = new List<AudioFade>();
-//private List<AudioFade> audioFadeOut = new List<AudioFade>();
-//private List<AudioSource> audioSources = new List<AudioSource>();
-//private Dictionary<AudioClip, AudioSource> audioDictionary = new Dictionary<AudioClip,AudioSource>();
-
-//// :: functions
-//void Awake()
-//{
-//    //Add(musics[0]);
-//    //FadeIn(musics[0], fade);
-//}
-
-//void Start () {
-//    EventManager<GameEvent>.InvokeGameState(this, null, null, GetType(), GameEvent._NULL_);
-//}
-
-//void Update()
-//{
-//    foreach (AudioFade fade in audioFadeIn)
-//    {
-//        if (!fade.Update(Time.deltaTime))
-//        {
-//            audioFadeIn.Remove(fade);
-//            audioSources.Add(fade.source);
-//        }
-//    }
-//    foreach (AudioFade fade in audioFadeOut)
-//    {
-//        if (!fade.Update(-Time.deltaTime))
-//        {
-//            fade.source.Stop();
-//            audioFadeIn.Remove(fade);
-//            audioSources.Add(fade.source);
-//        }
-//    }
-//}
-//public void Add(AudioClip clip)
-//{
-//    if (audioDictionary.ContainsKey(clip)) return;
-//    // create objects
-//    GameObject gameObj = Instantiate(new GameObject("manager-audio"), transform);
-//    AudioSource source = gameObj.AddComponent<AudioSource>();
-//    source.playOnAwake = false;
-//    source.clip = clip;
-//    source.Stop();
-//    // update audio manager
-//    audioSources.Add(source);
-//    audioDictionary.Add(clip, source);
-//}
-//public void Stop(AudioClip clip)
-//{
-//    audioDictionary[clip].Stop();
-//}
-//public void Play(AudioClip clip)
-//{
-//    audioDictionary[clip].Play();
-//    audioDictionary[clip].loop = true;
-//}
-//public void Play1(AudioClip clip)
-//{
-//    audioDictionary[clip].Play();
-//    audioDictionary[clip].loop = false;
-//}
-//public void FadeIn(AudioClip clip, float speed)
-//{
-//    if (audioDictionary.ContainsKey(clip))
-//    {
-//        // create audio fade
-//        AudioFade fade = new AudioFade();
-//        fade.source = audioDictionary[clip];
-//        fade.source.loop = true;
-//        fade.source.Play();
-//        fade.speed = speed;
-//        // update audio manager
-//        audioFadeIn.Add(fade);
-//        audioSources.Remove(fade.source);
-//    }
-//}
-//public void FadeOut(AudioClip clip, float speed)
-//{
-//    if (audioDictionary.ContainsKey(clip))
-//    {
-//        // create audio fade
-//        AudioFade fade = new AudioFade();
-//        fade.source = audioDictionary[clip];
-//        // update audio manager
-//        audioFadeOut.Add(fade);
-//        audioSources.Remove(fade.source);
-//    }
-//}
-//[System.Serializable]
-//public class AudioFade
-//{
-//    // :: variables
-//    public float speed;
-//    public AudioSource source;
-//    public static float minimum = 0.0f;
-//    public static float maximum = 1.0f;
-//    // :: functions
-//    public bool Update(float delta)
-//    {
-//        // update volume
-//        source.volume += delta * speed;
-//        // calculate clamp
-//        float clamp = Mathf.Clamp(source.volume, minimum, maximum);
-//        // check if volume is out of range
-//        if (clamp != source.volume)
-//        {
-//            // clamp volume
-//            source.volume = clamp;
-//            return false;
-//        }
-//        return true;
-//    }
-//}

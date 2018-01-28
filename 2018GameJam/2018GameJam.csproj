@@ -64,12 +64,6 @@
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>Library\UnityAssemblies\UnityEngine.TestRunner.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Timeline">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Timeline.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -94,8 +88,9 @@
     <Compile Include="Assets\Scripts\Player\Ping.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\SetRenderQueue.cs" />
-    <Compile Include="Assets\UIMessage.cs" />
-    <Compile Include="Assets\UIRadial.cs" />
+    <Compile Include="Assets\Scripts\UI\UIChoice.cs" />
+    <Compile Include="Assets\Scripts\UI\UIMessage.cs" />
+    <Compile Include="Assets\Scripts\UI\UIRadial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resourses\Materials\shaders\Shadow.shader" />

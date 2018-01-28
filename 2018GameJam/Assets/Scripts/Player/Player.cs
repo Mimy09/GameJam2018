@@ -28,6 +28,7 @@ public class Player : MonoBehaviour {
     private GameObject m_interacting_object;
     public UIMessage m_infobox;
     private bool m_in_infomenu = false;
+    private bool m_in_deathmenu = false;
     public GameObject m_boost;
     
     // private vars
@@ -103,15 +104,15 @@ public class Player : MonoBehaviour {
         }
 
         // Rotate
-        if (Input.GetKey(KeyCode.A) && !m_pinging) {
+        if (Input.GetKey(KeyCode.A) && !m_pinging && !m_in_deathmenu) {
             this.transform.Rotate(new Vector3(0, 0, Time.deltaTime * m_speed));
             
         }
-        if (Input.GetKey(KeyCode.D) && !m_pinging) {
+        if (Input.GetKey(KeyCode.D) && !m_pinging && !m_in_deathmenu) {
             this.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * m_speed));
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && m_in_infomenu) {
+        if (Input.GetKeyDown(KeyCode.Escape) && m_in_infomenu || Input.GetKeyDown(KeyCode.Escape) && m_in_deathmenu) {
             m_in_infomenu = false;
             m_interacting = false;
             m_infobox.FadeOut();
@@ -121,6 +122,17 @@ public class Player : MonoBehaviour {
                     m_interacting_object.GetComponent<Planet>().m_resources = 0;
                     m_interacting_object.GetComponent<Planet>().m_artifacts = 0;
                 }
+            }
+
+            if (m_in_deathmenu) {
+                m_in_deathmenu = false;
+                m_in_infomenu = false;
+                m_interacting = false;
+                m_fuel /= 2;
+                if (m_artifacts != 0) m_artifacts /= 2;
+                if (m_resources != 0) m_resources /= 2;
+
+                transform.position = new Vector3(0, 0, 0);
             }
         }
 
@@ -147,7 +159,7 @@ public class Player : MonoBehaviour {
         }
 
         // Acceleration
-        if (Input.GetKey(KeyCode.W) && m_fuel > 0 && !m_interacting && !m_pinging) {
+        if (Input.GetKey(KeyCode.W) && m_fuel > 0 && !m_interacting && !m_pinging && !m_in_deathmenu) {
             m_boost.SetActive(true);
 
             if (m_velocity < m_max_velocity) {
@@ -157,7 +169,7 @@ public class Player : MonoBehaviour {
                 m_fuel -= Time.deltaTime;
             }
         } else {
-            if (Input.GetKey(KeyCode.S) && m_fuel > 0 && !m_interacting && !m_pinging) {
+            if (Input.GetKey(KeyCode.S) && m_fuel > 0 && !m_interacting && !m_pinging && !m_in_deathmenu) {
 
                 if (m_velocity > -(m_max_velocity / 2))
                     m_velocity -= m_acceleration;
@@ -197,12 +209,13 @@ public class Player : MonoBehaviour {
         m_interacting_object = c.gameObject;
 
         if (c.tag == "Death Trigger") {
-            m_in_infomenu = true;
+            m_in_deathmenu = true;
+
             m_infobox.Title = "You Crashed";
-            m_infobox.Message = "Diary #13 I ran into an asteroid today, crashed my ship and had to wait 3 weeks for a tow back to the fuel station. Totally worth it!";
+            m_infobox.Message = "Diary #13 I ran into an asteroid today, crashed my ship and had to wait 3 weeks for a tow back to the fuel station. Totally worth it";
             m_infobox.isAction1ButtonVisible = false;
             m_infobox.Action2Text = "Close";
-            
+            m_infobox.MessageSize = 15;
             m_infobox.Action2Key = "Esc";
             m_infobox.FadeIn();
 

@@ -6,12 +6,13 @@ public class ShadowPostRender : MonoBehaviour {
 
     public Material _material;
     public float timer;
+    public Player ply;
 
     public void Update () {
         if (timer >= -3.141) {
             timer -= Time.deltaTime*2;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && timer < -3.141) {
+        if (ply.m_canping) {
             timer = 3.141f;
         }
 

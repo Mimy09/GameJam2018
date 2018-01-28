@@ -120,7 +120,7 @@ public class Ping : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Space) && Player.GetComponent<Player>().m_velocity == 0) {
+        if (Player.GetComponent<Player>().m_canping == true) {
             transform.position = Player.transform.position;
             Sonar();
         }

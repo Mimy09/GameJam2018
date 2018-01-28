@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class UIMessage : MonoBehaviour
 {
+    // Required variables
     private Animator m_animator;
     private UnityEngine.UI.Text m_title = null;
     private UnityEngine.UI.Text m_message = null;
@@ -11,8 +12,12 @@ public class UIMessage : MonoBehaviour
     private UnityEngine.UI.Text[] m_actionKEY = new UnityEngine.UI.Text[2];
     private UnityEngine.UI.Button[] m_actionBTN = new UnityEngine.UI.Button[2];
 
+    // Getters and Setters
+    public bool Display { get { return m_animator.GetBool("Display"); } set { m_animator.SetBool("Display", value); } }
     public string Title { get { return m_title.text; } set { m_title.text = value; } }
+    public int TitleSize { get { return m_title.fontSize; } set { m_title.fontSize = value; } }
     public string Message { get { return m_message.text; } set { m_message.text = value; } }
+    public int MessageSize { get { return m_message.fontSize; } set { m_message.fontSize = value; } }
     public string Action1Key { get { return m_actionKEY[1].text; } set { m_actionKEY[1].text = value; } }
     public string Action2Key { get { return m_actionKEY[0].text; } set { m_actionKEY[0].text = value; } }
     public string Action1Text { get { return m_actionTXT[1].text; } set { m_actionTXT[1].text = value; } }
@@ -37,17 +42,7 @@ public class UIMessage : MonoBehaviour
         m_actionBTN[0] = componentsBTN[0];
         m_actionBTN[1] = componentsBTN[1];
     }
-	
 
-    public void FadeIn()
-    {
-        // start fade in animation
-        m_animator.SetBool("Display", true);
-    }
-
-    public void FadeOut()
-    {
-        // start fade out animation
-        m_animator.SetBool("Display", false);
-    }
+    public void FadeIn() { Display = true; }
+    public void FadeOut() { Display = false; }
 }
